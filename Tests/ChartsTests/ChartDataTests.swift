@@ -78,4 +78,38 @@ class ChartDataTests: XCTestCase {
 
         XCTAssertEqual(maxEntryCountSet, dataSet1)
     }
+    
+    func testReplaceSubrange() {
+        var a = ChartDataSet(entries: [
+            ChartDataEntry(x: 2, y: 2),
+            ChartDataEntry(x: 3, y: 3),
+            ChartDataEntry(x: 4, y: 4),
+            ChartDataEntry(x: 5, y: 5),
+        ])
+        a.replaceSubrange(1...2, with: repeatElement(ChartDataEntry(x: 1, y: 1), count: 5))
+        
+        XCTAssertEqual(a.entries, [
+            ChartDataEntry(x: 2, y: 2),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 5, y: 5),
+        ])
+        
+        var b = ChartDataSet(entries: [
+            ChartDataEntry(x: 2, y: 2),
+            ChartDataEntry(x: 3, y: 3),
+            ChartDataEntry(x: 4, y: 4),
+            ChartDataEntry(x: 5, y: 5),
+        ])
+        
+        b.replaceSubrange(1...2, with: [ChartDataEntry(x: 1, y: 1)])
+        XCTAssertEqual(b.entries, [
+            ChartDataEntry(x: 2, y: 2),
+            ChartDataEntry(x: 1, y: 1),
+            ChartDataEntry(x: 5, y: 5),
+        ])
+    }
 }
